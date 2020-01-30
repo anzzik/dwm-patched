@@ -1,5 +1,6 @@
 /* See LICENSE file for copyright and license details. */
 
+
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -24,7 +25,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "Terminal", "Browser", "vifm", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "Terminal", "Browser", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -35,8 +36,8 @@ static const Rule rules[] = {
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 	{ "Steam",    NULL,       NULL,	      1 << 3,       1,           -1 },
-	{ NULL,	      NULL,       "vifm",     1 << 2,       0,           -1 },
-	{ NULL,	      NULL,       "feh",      1 << 2,       1,           -1 },
+	{ NULL,	      NULL,       "vifm",     1 << 0,       0,           -1 },
+	{ NULL,	      NULL,       "feh",      1 << 0,       1,           -1 },
 	{ "Chromium", NULL,       NULL,	      1 << 1,       0,           -1 },
 };
 
