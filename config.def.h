@@ -5,21 +5,33 @@ static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=10" };
-static const char dmenufont[]       = "monospace:size=10";
+static const char terminal[]	    = "st";
+static const char defaultfont[]	    = "mononoki Nerd Font:style=Bold:size=12";
+static const char *fonts[]          = { defaultfont };
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
+static const char col_testfg[]      = "#bbc5ff";
+static const char col_testbg[]      = "#292d3d";
+static const char col_brownfg_bright[]      = "#eaccae";
+static const char col_brownfg_dim[]      = "#aa7c5e";
+static const char col_brownbg[]      = "#121010";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+	// [SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
+	// [SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+
+	// [SchemeNorm] = { col_testfg, col_cyan, col_gray2 },
+	// [SchemeSel]  = { col_testfg, col_testbg,  col_cyan  },
+
+	[SchemeNorm] = { col_brownfg_dim,    col_brownbg,  col_gray2 },
+	[SchemeSel]  = { col_brownfg_bright, col_brownbg,  col_brownfg_bright  },
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "💻", "🌐", "📧", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -27,8 +39,11 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "Steam",    NULL,       NULL,	      1 << 3,       1,           -1 },
+	{ "Geary",    NULL,       NULL,	      1 << 2,       1,           -1 },
+	{ NULL,	      NULL,       "vifm",     1 << 0,       0,           -1 },
+	{ NULL,	      NULL,       "feh",      1 << 0,       1,           -1 },
+	{ "Chromium", NULL,       NULL,	      1 << 1,       0,           -1 },
 };
 
 /* layout(s) */
@@ -44,7 +59,7 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -56,23 +71,27 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", defaultfont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *termcmd[]  = { terminal, NULL };
+static const char *browsercmd[]  = { "chromium", NULL };
+static const char *vifmcmd[]  = { terminal,  "-e",  "/usr/local/bin/vifmrun", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
+	{ MODKEY,	                XK_Return, spawn,          {.v = termcmd } },
+//	{ MODKEY,                       XK_b,      togglebar,      {0} },
+	{ MODKEY,                       XK_b,      spawn,	   {.v = browsercmd } },
+	{ MODKEY,                       XK_e,      spawn,	   {.v = vifmcmd } },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_Return, zoom,           {0} },
+	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
+	{ MODKEY,	                XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },

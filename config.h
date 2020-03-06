@@ -1,12 +1,11 @@
 /* See LICENSE file for copyright and license details. */
 
-
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char terminal[]	    = "termite";
+static const char terminal[]	    = "st";
 static const char defaultfont[]	    = "mononoki Nerd Font:style=Bold:size=12";
 static const char *fonts[]          = { defaultfont };
 static const char col_gray1[]       = "#222222";
@@ -16,16 +15,23 @@ static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
 static const char col_testfg[]      = "#bbc5ff";
 static const char col_testbg[]      = "#292d3d";
+static const char col_brownfg_bright[]      = "#eaccae";
+static const char col_brownfg_dim[]      = "#aa7c5e";
+static const char col_brownbg[]      = "#121010";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-//	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeNorm] = { col_testfg, col_cyan, col_gray2 },
-//	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
-	[SchemeSel]  = { col_testfg, col_testbg,  col_cyan  },
+	// [SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
+	// [SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+
+	// [SchemeNorm] = { col_testfg, col_cyan, col_gray2 },
+	// [SchemeSel]  = { col_testfg, col_testbg,  col_cyan  },
+
+	[SchemeNorm] = { col_brownfg_dim,    col_brownbg,  col_gray2 },
+	[SchemeSel]  = { col_brownfg_bright, col_brownbg,  col_brownfg_bright  },
 };
 
 /* tagging */
-static const char *tags[] = { "Terminal", "Browser", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "💻", "🌐", "📧", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -33,9 +39,8 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 	{ "Steam",    NULL,       NULL,	      1 << 3,       1,           -1 },
+	{ "Geary",    NULL,       NULL,	      1 << 2,       1,           -1 },
 	{ NULL,	      NULL,       "vifm",     1 << 0,       0,           -1 },
 	{ NULL,	      NULL,       "feh",      1 << 0,       1,           -1 },
 	{ "Chromium", NULL,       NULL,	      1 << 1,       0,           -1 },
