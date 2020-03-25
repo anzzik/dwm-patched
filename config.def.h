@@ -117,6 +117,7 @@ static Key keys[] = {
 };
 
 /* button definitions */
+/* Button3 is right mouse button */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
 	/* click                event mask      button          function        argument */
